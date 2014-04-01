@@ -8,6 +8,6 @@
  
 <body>
 	<div style='text-align:right' id='header'>
-		<img height='50px' src='application/assets/img/Notif.png' />
-		<img height='50px' src='application/assets/img/Deco.png' />
+		<img height='50px' src='application/assets/img/icons/Notif.png' />
+		<img height='50px' src='application/assets/img/icons/Deco.png' />
 	</div>
