@@ -19,7 +19,17 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		//$this->load->view('welcome_message');
+
+		// définition des données variables du template
+	    $data['title'] = 'Menu';
+	     
+	    // on charge la view qui contient le corps de la page
+	    $data['contents'] = 'menu';
+	 
+	    // on charge la page dans le template
+	    $this->load->view('template/template', $data);
+
 	}
 	public function test($graine){
 		$this->load->library('Jeu');
