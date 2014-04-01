@@ -16,13 +16,13 @@ if(!mkdir($nomExercice))
 }
 
 $fichier="init.json";
-if(file_exists(/$nomExercice/$fichier))
+if(file_exists("/".$nomExercice."/".$fichier))
 {
   die("Problème lors de la création du fichier, veuillez contactez un administrateur.");
 }
 else
 {
-	touch(/$nomExercice/$fichier);
+	touch("/".$nomExercice."/".$fichier);
 }
 
 $json["nom"] = $nomExercice;
