@@ -28,6 +28,11 @@ class Welcome extends CI_Controller {
 		$this->exercice->replay($graine);
 		$this->exercice->init($graine);
 	}
+
+	public function formulaire()
+	{
+		$this->load->view('Form');
+	}
 }
 
 /* End of file welcome.php */
