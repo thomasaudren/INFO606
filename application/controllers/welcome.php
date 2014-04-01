@@ -21,6 +21,13 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->view('welcome_message');
 	}
+	public function test($graine){
+		$this->load->library('Jeu');
+		$this->load->library('Exercice/Exercice');
+		$this->jeu->replay($graine);
+		$this->exercice->replay($graine);
+		$this->exercice->init($graine);
+	}
 }
 
 /* End of file welcome.php */

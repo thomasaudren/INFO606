@@ -3,6 +3,13 @@
 
 class Jeu
 {
-	function init(); /*Non définitif*/
-	function replay(); /*Permet le replay*/
+	/*Non définitif*/
+	function init($nom){
+		echo "init: ".$nom;
+	}
+
+	/*Permet le replay*/
+	function replay(){
+		echo "<div id='replay'>Pas replay disponible<div>";
+	}
 }
