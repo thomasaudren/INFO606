@@ -28,7 +28,7 @@ class Welcome extends CI_Controller {
 	    $data['contents'] = 'menu';
 	 
 	    // on charge la page dans le template
-	    $this->load->view('template/template', $data);
+	    $this->load->view('connexion', $data);
 
 	}
 	public function test($graine){
@@ -37,6 +37,27 @@ class Welcome extends CI_Controller {
 		$this->jeu->replay($graine);
 		$this->exercice->replay($graine);
 		$this->exercice->init($graine);
+	}
+
+	public function connexion(){
+		$this->load->view('template/template', $data);
+	}
+
+	public function redirect()
+	{
+		if(isset($_POST['login']) && isset($_POST['pass']))
+		{
+			// définition des données variables du template
+	    	$data['title'] = 'Menu';
+	    	// on charge la view qui contient le corps de la page
+	    	$data['contents'] = 'menu';
+
+			$this->load->view('template/template', $data);
+		}
+		else
+		{
+			echo '!OK';
+		}
 	}
 
 	public function formulaire()
