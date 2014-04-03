@@ -8,6 +8,12 @@
 		</div>
 		<div class='case'>
 			<img src='application/assets/img/icons/Calendrier.png' />
+			<div class="date">
+				<div id="jour">
+				</div>
+				<div id="mois">
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class='rowTwo'>

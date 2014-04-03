@@ -12,3 +12,33 @@ html{
 	width: 150px;
 	margin: 4% 10%;
 }
+
+.notifications {
+    float: right;
+    left: -106px;
+    position: relative;
+    top: 0;
+    width: 0;
+}
+		#notif {
+    background: none repeat scroll 0 0 #DF3636;
+    border: 2px solid #FFFFFF;
+    border-radius: 100%;
+    display: inline-block;
+    float: right;
+    padding-left: 5px;
+    padding-right: 5px;
+    position: relative;
+    right: -22px;
+    top: -13px;
+}
+
+		.date {
+    float: right;
+    font-size: 200%;
+    position: relative;
+    right: 210px;
+    text-align: center;
+    top: -194px;
+    z-index: 12;
+}
