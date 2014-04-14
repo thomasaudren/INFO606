@@ -26,7 +26,6 @@ var_dump($stmt->fetch());
        		WHERE nom_pays='{$nom}' 
 SQL
 );
-		var_dump($stmt->fetch());
 		if($stmt->fetch())
 		{
 			return $stmt->fetch();

@@ -1,4 +1,8 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php 
+
+include 'personneC.php';
+
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Welcome extends CI_Controller {
 
@@ -22,7 +26,7 @@ class Welcome extends CI_Controller {
 		//$this->load->view('welcome_message');
 
 		// définition des données variables du template
-	    $data['title'] = 'Menu';
+	    $data['title'] = 'Connexion';
 	     
 	    // on charge la view qui contient le corps de la page
 	    $data['contents'] = 'menu';
@@ -47,16 +51,20 @@ class Welcome extends CI_Controller {
 	{
 		if(isset($_POST['login']) && isset($_POST['pass']))
 		{
+			$personne = new personneC;
 			// définition des données variables du template
-	    	$data['title'] = 'Menu';
+	    	$data['title'] = 'Accueil';
 	    	// on charge la view qui contient le corps de la page
 	    	$data['contents'] = 'menu';
-
-			$this->load->view('template/template', $data);
+	    	
+			if($personne->connexion($_POST['login'], $_POST['pass']))
+			{
+				$this->load->view('template/template', $data);
+			}
 		}
 		else
 		{
-			echo '!OK';
+			$this->load->view('connexion', $data);
 		}
 	}
 
