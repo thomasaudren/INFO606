@@ -20,6 +20,9 @@ html{
     top: 0;
     width: 0;
 }
+#identifiant{
+	float: left;
+}
 		#notif {
     background: none repeat scroll 0 0 #DF3636;
     border: 2px solid #FFFFFF;

@@ -1,13 +1,13 @@
 <div id='content'>
 	<div class='rowOne'>
 		<div class='case'>
-			<img src='http://localhost/INFO606/application/assets/img/icons/Stats.png' />
+			<img src=<?php echo base_url().'application/assets/img/icons/Stats.png' ?> />
 		</div>
 		<div class='case'>
-			<img src='http://localhost/INFO606/application/assets/img/icons/Agenda.png' />
+			<img src=<?php echo base_url().'application/assets/img/icons/Agenda.png' ?> />
 		</div>
 		<div class='case'>
-			<img src='http://localhost/INFO606/application/assets/img/icons/Calendrier.png' />
+			<img src=<?php echo base_url().'application/assets/img/icons/Calendrier.png' ?> />
 			<div class="date">
 				<div id="jour">
 				</div>
@@ -18,10 +18,10 @@
 	</div>
 	<div class='rowTwo'>
 		<div class='case'>
-			<img src='http://localhost/INFO606/application/assets/img/icons/Parametre.png' />
+			<img src=<?php echo base_url().'application/assets/img/icons/Parametre.png' ?> />
 		</div>
 		<div class='case'>
-			<img src='http://localhost/INFO606/application/assets/img/icons/Correspondance.png' />
+			<img src=<?php echo base_url().'application/assets/img/icons/Correspondance.png' ?> />
 		</div>
 	</div>
 </div>
