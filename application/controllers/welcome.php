@@ -6,6 +6,11 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Welcome extends CI_Controller {
 
+
+	public function __construct()
+	{
+		 parent::__construct();
+	}
 	/**
 	 * Index Page for this controller.
 	 *
@@ -32,7 +37,7 @@ class Welcome extends CI_Controller {
 	    $data['contents'] = 'menu';
 	 
 	    // on charge la page dans le template
-	    $this->load->view('connexion', $data);
+	    $this->load->view('connexion');
 
 	}
 	public function test($graine){
@@ -55,22 +60,34 @@ class Welcome extends CI_Controller {
 			// définition des données variables du template
 	    	$data['title'] = 'Accueil';
 	    	// on charge la view qui contient le corps de la page
-	    	$data['contents'] = 'menu';
+$data['contents'] = '';
 	    	
 			if($personne->connexion($_POST['login'], $_POST['pass']))
 			{
-				$this->load->view('template/template', $data);
+				$P = $personne->getPersonneByLogin($_POST['login']);
+				//Gestion erreurs
+				session_start();
+				$_SESSION['login'] = $_POST['login'];
+				$_SESSION['nom'] = $P['nom'];
+				$_SESSION['prenom'] = $P['prenom'];
+				$_SESSION['profil'] = $P['profil'];
+				var_dump($P);
+				var_dump($_SESSION['profil']=="Professeur");
+				if($_SESSION['profil']=="Professeur")
+				{
+					$data['contents'] = 'menu';
+				}
+				else if($_SESSION['profil']=="Developpeur")
+				{
+					$data['contents'] = 'Form';
+				}
+					$this->load->view('template/template', $data);					
 			}
 		}
 		else
 		{
-			$this->load->view('connexion', $data);
+			$this->load->view('connexion');
 		}
-	}
-
-	public function formulaire()
-	{
-		$this->load->view('Form');
 	}
 }
 

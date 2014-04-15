@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4
+-- version 4.1.6
 -- http://www.phpmyadmin.net
 --
--- Client: localhost
--- Généré le: Mar 15 Avril 2014 à 14:19
--- Version du serveur: 5.6.12-log
--- Version de PHP: 5.4.12
+-- Client :  127.0.0.1
+-- Généré le :  Lun 14 Avril 2014 à 16:46
+-- Version du serveur :  5.6.16
+-- Version de PHP :  5.5.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,10 +17,8 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données: `606`
+-- Base de données :  `606`
 --
-CREATE DATABASE IF NOT EXISTS `606` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `606`;
 
 -- --------------------------------------------------------
 
@@ -32,7 +30,14 @@ CREATE TABLE IF NOT EXISTS `academie` (
   `ID_ACADEMIE` int(11) NOT NULL AUTO_INCREMENT,
   `LIB_ACADEMIE` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`ID_ACADEMIE`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Contenu de la table `academie`
+--
+
+INSERT INTO `academie` (`ID_ACADEMIE`, `LIB_ACADEMIE`) VALUES
+(1, 'REIMS');
 
 -- --------------------------------------------------------
 
@@ -43,41 +48,7 @@ CREATE TABLE IF NOT EXISTS `academie` (
 CREATE TABLE IF NOT EXISTS `agenda` (
   `ID_AGENDA` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`ID_AGENDA`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Contenu de la table `agenda`
---
-
-INSERT INTO `agenda` (`ID_AGENDA`) VALUES
-(1),
-(2);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `apartenir_per_cla`
---
-
-CREATE TABLE IF NOT EXISTS `apartenir_per_cla` (
-  `ID_PERSONNE` int(11) NOT NULL,
-  `ID_CLASSE` int(11) NOT NULL,
-  PRIMARY KEY (`ID_PERSONNE`,`ID_CLASSE`),
-  KEY `FK_APARTENIR_PER_CLA2` (`ID_CLASSE`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `appartenir_per_eta`
---
-
-CREATE TABLE IF NOT EXISTS `appartenir_per_eta` (
-  `ID_PERSONNE` int(11) NOT NULL,
-  `ID_ETABLISSEMENT` int(11) NOT NULL,
-  PRIMARY KEY (`ID_PERSONNE`,`ID_ETABLISSEMENT`),
-  KEY `FK_APPARTENIR_PER_ETA2` (`ID_ETABLISSEMENT`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -88,9 +59,11 @@ CREATE TABLE IF NOT EXISTS `appartenir_per_eta` (
 CREATE TABLE IF NOT EXISTS `classe` (
   `ID_CLASSE` int(11) NOT NULL AUTO_INCREMENT,
   `ID_ETABLISSEMENT` int(11) NOT NULL,
+  `ID_PERSONNE` int(11) NOT NULL,
   `LIB_CLASSE` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`ID_CLASSE`),
-  KEY `FK_DEPENDRE` (`ID_ETABLISSEMENT`)
+  KEY `FK_DEPENDRE` (`ID_ETABLISSEMENT`),
+  KEY `FK_FAIRE` (`ID_PERSONNE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -105,7 +78,52 @@ CREATE TABLE IF NOT EXISTS `commune` (
   `NOM_COMMUNE` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`ID_COMMUNE`),
   KEY `FK_ETRE_DANS` (`ID_PAYS`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Contenu de la table `commune`
+--
+
+INSERT INTO `commune` (`ID_COMMUNE`, `ID_PAYS`, `NOM_COMMUNE`) VALUES
+(1, 1, 'REIMS');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `dev`
+--
+
+CREATE TABLE IF NOT EXISTS `dev` (
+  `ID_PERSONNE` int(11) NOT NULL,
+  PRIMARY KEY (`ID_PERSONNE`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `dev`
+--
+
+INSERT INTO `dev` (`ID_PERSONNE`) VALUES
+(2);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `eleve`
+--
+
+CREATE TABLE IF NOT EXISTS `eleve` (
+  `PASSWORD` longtext,
+  `LOGIN` varchar(256) DEFAULT NULL,
+  `REDOUBLANT` int(11) DEFAULT NULL,
+  `ID_PERSONNE` int(11) NOT NULL,
+  `ID_CLASSE` int(11) NOT NULL,
+  `ID_AGENDA` int(11) NOT NULL,
+  `ID_ETABLISSEMENT` int(11) NOT NULL,
+  PRIMARY KEY (`ID_PERSONNE`),
+  KEY `FK_APARTENIR` (`ID_CLASSE`),
+  KEY `FK_APPARTENIR_3` (`ID_ETABLISSEMENT`),
+  KEY `FK_POSSEDER_2` (`ID_AGENDA`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -121,7 +139,14 @@ CREATE TABLE IF NOT EXISTS `etablissement` (
   PRIMARY KEY (`ID_ETABLISSEMENT`),
   KEY `FK_ETRE_SITUER` (`ID_COMMUNE`),
   KEY `FK_POSSEDER` (`ID_ACADEMIE`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Contenu de la table `etablissement`
+--
+
+INSERT INTO `etablissement` (`ID_ETABLISSEMENT`, `ID_COMMUNE`, `ID_ACADEMIE`, `LIB_ETABLISSEMENT`) VALUES
+(1, 1, 1, 'Lycée Georges Clémenceau');
 
 -- --------------------------------------------------------
 
@@ -133,7 +158,6 @@ CREATE TABLE IF NOT EXISTS `exercer` (
   `ID_EXERCICE` int(11) NOT NULL,
   `ID_PERSONNE` int(11) NOT NULL,
   `GRAINE` longtext,
-  `PERCENT` int(11) DEFAULT NULL,
   `DATE` date DEFAULT NULL,
   PRIMARY KEY (`ID_EXERCICE`,`ID_PERSONNE`),
   KEY `FK_EXERCER2` (`ID_PERSONNE`)
@@ -148,8 +172,8 @@ CREATE TABLE IF NOT EXISTS `exercer` (
 CREATE TABLE IF NOT EXISTS `exercice` (
   `ID_EXERCICE` int(11) NOT NULL AUTO_INCREMENT,
   `ID_MATIERE` int(11) NOT NULL,
-  `ID_PERSONNE` int(11) NOT NULL,
   `ID_NIVEAU` int(11) NOT NULL,
+  `ID_PERSONNE` int(11) NOT NULL,
   `LIB_EXERCICE` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`ID_EXERCICE`),
   KEY `FK_APPARTENIR_2` (`ID_NIVEAU`),
@@ -206,7 +230,14 @@ CREATE TABLE IF NOT EXISTS `pays` (
   `ID_PAYS` int(11) NOT NULL AUTO_INCREMENT,
   `NOM_PAYS` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`ID_PAYS`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Contenu de la table `pays`
+--
+
+INSERT INTO `pays` (`ID_PAYS`, `NOM_PAYS`) VALUES
+(1, 'FRANCE');
 
 -- --------------------------------------------------------
 
@@ -216,69 +247,73 @@ CREATE TABLE IF NOT EXISTS `pays` (
 
 CREATE TABLE IF NOT EXISTS `personne` (
   `ID_PERSONNE` int(11) NOT NULL AUTO_INCREMENT,
-  `ID_PROFIL` int(11) NOT NULL,
-  `ID_AGENDA` int(11) NOT NULL,
   `NOM_PERSONNE` varchar(1024) DEFAULT NULL,
   `PRENOM_PERSONNE` varchar(1024) DEFAULT NULL,
   `DATE_NAISSANCE` date DEFAULT NULL,
-  `PASSWORD` longtext,
+  `PASSWORD` varchar(256) DEFAULT NULL,
   `LOGIN` varchar(256) DEFAULT NULL,
-  PRIMARY KEY (`ID_PERSONNE`),
-  KEY `FK_CORRESPONDRE` (`ID_PROFIL`),
-  KEY `FK_POSSEDER_2` (`ID_AGENDA`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+  PRIMARY KEY (`ID_PERSONNE`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Contenu de la table `personne`
 --
 
-INSERT INTO `personne` (`ID_PERSONNE`, `ID_PROFIL`, `ID_AGENDA`, `NOM_PERSONNE`, `PRENOM_PERSONNE`, `DATE_NAISSANCE`, `PASSWORD`, `LOGIN`) VALUES
-(2, 1, 1, 'DELEPLACE', 'Nicolas', '2014-04-01', '21232f297a57a5a743894a0e4a801fc3', 'DELEP001'),
-(3, 1, 1, 'AUDREN', 'Thomas', '2014-04-01', '21232f297a57a5a743894a0e4a801fc3', 'AUDRE001'),
-(4, 2, 1, 'RABAT', 'Cyril', '2014-04-01', '21232f297a57a5a743894a0e4a801fc3', 'RABAT001');
+INSERT INTO `personne` (`ID_PERSONNE`, `NOM_PERSONNE`, `PRENOM_PERSONNE`, `DATE_NAISSANCE`, `PASSWORD`, `LOGIN`) VALUES
+(1, 'DELEPLACE', 'NICOLAS', '2014-04-01', '21232f297a57a5a743894a0e4a801fc3', 'DELEP001'),
+(2, 'AUDREN', 'THOMAS', '2014-04-01', '21232f297a57a5a743894a0e4a801fc3', 'AUDRE001');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `profil`
+-- Structure de la table `professeur`
 --
 
-CREATE TABLE IF NOT EXISTS `profil` (
-  `ID_PROFIL` int(11) NOT NULL AUTO_INCREMENT,
-  `LIB_PROFIL` varchar(256) DEFAULT NULL,
-  PRIMARY KEY (`ID_PROFIL`)
+CREATE TABLE IF NOT EXISTS `professeur` (
+  `ID_PERSONNE` int(11) NOT NULL,
+  `ID_STATUT` int(11) NOT NULL,
+  `ID_ETABLISSEMENT` int(11) NOT NULL,
+  PRIMARY KEY (`ID_PERSONNE`),
+  KEY `FK_APPARTENIR_` (`ID_ETABLISSEMENT`),
+  KEY `FK_ETRE` (`ID_STATUT`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `professeur`
+--
+
+INSERT INTO `professeur` (`ID_PERSONNE`, `ID_STATUT`, `ID_ETABLISSEMENT`) VALUES
+(1, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `statut`
+--
+
+CREATE TABLE IF NOT EXISTS `statut` (
+  `ID_STATUT` int(11) NOT NULL AUTO_INCREMENT,
+  `LIB_STATUT` varchar(1024) DEFAULT NULL,
+  PRIMARY KEY (`ID_STATUT`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
--- Contenu de la table `profil`
+-- Contenu de la table `statut`
 --
 
-INSERT INTO `profil` (`ID_PROFIL`, `LIB_PROFIL`) VALUES
+INSERT INTO `statut` (`ID_STATUT`, `LIB_STATUT`) VALUES
 (1, 'Professeur'),
-(2, 'Developpeur');
+(2, 'Directeur');
 
 --
 -- Contraintes pour les tables exportées
 --
 
 --
--- Contraintes pour la table `apartenir_per_cla`
---
-ALTER TABLE `apartenir_per_cla`
-  ADD CONSTRAINT `FK_APARTENIR_PER_CLA2` FOREIGN KEY (`ID_CLASSE`) REFERENCES `classe` (`ID_CLASSE`),
-  ADD CONSTRAINT `FK_APARTENIR_PER_CLA` FOREIGN KEY (`ID_PERSONNE`) REFERENCES `personne` (`ID_PERSONNE`);
-
---
--- Contraintes pour la table `appartenir_per_eta`
---
-ALTER TABLE `appartenir_per_eta`
-  ADD CONSTRAINT `FK_APPARTENIR_PER_ETA2` FOREIGN KEY (`ID_ETABLISSEMENT`) REFERENCES `etablissement` (`ID_ETABLISSEMENT`),
-  ADD CONSTRAINT `FK_APPARTENIR_PER_ETA` FOREIGN KEY (`ID_PERSONNE`) REFERENCES `personne` (`ID_PERSONNE`);
-
---
 -- Contraintes pour la table `classe`
 --
 ALTER TABLE `classe`
+  ADD CONSTRAINT `FK_FAIRE` FOREIGN KEY (`ID_PERSONNE`) REFERENCES `professeur` (`ID_PERSONNE`),
   ADD CONSTRAINT `FK_DEPENDRE` FOREIGN KEY (`ID_ETABLISSEMENT`) REFERENCES `etablissement` (`ID_ETABLISSEMENT`);
 
 --
@@ -286,6 +321,21 @@ ALTER TABLE `classe`
 --
 ALTER TABLE `commune`
   ADD CONSTRAINT `FK_ETRE_DANS` FOREIGN KEY (`ID_PAYS`) REFERENCES `pays` (`ID_PAYS`);
+
+--
+-- Contraintes pour la table `dev`
+--
+ALTER TABLE `dev`
+  ADD CONSTRAINT `FK_HERITAGE_2` FOREIGN KEY (`ID_PERSONNE`) REFERENCES `personne` (`ID_PERSONNE`);
+
+--
+-- Contraintes pour la table `eleve`
+--
+ALTER TABLE `eleve`
+  ADD CONSTRAINT `FK_POSSEDER_2` FOREIGN KEY (`ID_AGENDA`) REFERENCES `agenda` (`ID_AGENDA`),
+  ADD CONSTRAINT `FK_APARTENIR` FOREIGN KEY (`ID_CLASSE`) REFERENCES `classe` (`ID_CLASSE`),
+  ADD CONSTRAINT `FK_APPARTENIR_3` FOREIGN KEY (`ID_ETABLISSEMENT`) REFERENCES `etablissement` (`ID_ETABLISSEMENT`),
+  ADD CONSTRAINT `FK_HERITAGE_3` FOREIGN KEY (`ID_PERSONNE`) REFERENCES `personne` (`ID_PERSONNE`);
 
 --
 -- Contraintes pour la table `etablissement`
@@ -298,14 +348,14 @@ ALTER TABLE `etablissement`
 -- Contraintes pour la table `exercer`
 --
 ALTER TABLE `exercer`
-  ADD CONSTRAINT `FK_EXERCER2` FOREIGN KEY (`ID_PERSONNE`) REFERENCES `personne` (`ID_PERSONNE`),
+  ADD CONSTRAINT `FK_EXERCER2` FOREIGN KEY (`ID_PERSONNE`) REFERENCES `eleve` (`ID_PERSONNE`),
   ADD CONSTRAINT `FK_EXERCER` FOREIGN KEY (`ID_EXERCICE`) REFERENCES `exercice` (`ID_EXERCICE`);
 
 --
 -- Contraintes pour la table `exercice`
 --
 ALTER TABLE `exercice`
-  ADD CONSTRAINT `FK_CREER` FOREIGN KEY (`ID_PERSONNE`) REFERENCES `personne` (`ID_PERSONNE`),
+  ADD CONSTRAINT `FK_CREER` FOREIGN KEY (`ID_PERSONNE`) REFERENCES `dev` (`ID_PERSONNE`),
   ADD CONSTRAINT `FK_APPARTENIR_2` FOREIGN KEY (`ID_NIVEAU`) REFERENCES `niveau` (`ID_NIVEAU`),
   ADD CONSTRAINT `FK_CONCERNER` FOREIGN KEY (`ID_MATIERE`) REFERENCES `matiere` (`ID_MATIERE`);
 
@@ -316,11 +366,12 @@ ALTER TABLE `page`
   ADD CONSTRAINT `FK_AVOIR_2` FOREIGN KEY (`ID_AGENDA`) REFERENCES `agenda` (`ID_AGENDA`);
 
 --
--- Contraintes pour la table `personne`
+-- Contraintes pour la table `professeur`
 --
-ALTER TABLE `personne`
-  ADD CONSTRAINT `FK_POSSEDER_2` FOREIGN KEY (`ID_AGENDA`) REFERENCES `agenda` (`ID_AGENDA`),
-  ADD CONSTRAINT `FK_CORRESPONDRE` FOREIGN KEY (`ID_PROFIL`) REFERENCES `profil` (`ID_PROFIL`);
+ALTER TABLE `professeur`
+  ADD CONSTRAINT `FK_APPARTENIR_` FOREIGN KEY (`ID_ETABLISSEMENT`) REFERENCES `etablissement` (`ID_ETABLISSEMENT`),
+  ADD CONSTRAINT `FK_ETRE` FOREIGN KEY (`ID_STATUT`) REFERENCES `statut` (`ID_STATUT`),
+  ADD CONSTRAINT `FK_HERITAGE_1` FOREIGN KEY (`ID_PERSONNE`) REFERENCES `personne` (`ID_PERSONNE`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
