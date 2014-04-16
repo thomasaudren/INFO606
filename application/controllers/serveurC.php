@@ -4,6 +4,10 @@ include 'personneC.php';
 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+// Constante pour les types de requêtes
+		define("MODE_ERREUR", 1);       // Aucune requête valide
+		define("MODE_CONNEXION", 2);    // Requête de connexion
+
 class serveurC extends CI_Controller {
 
 
@@ -15,9 +19,7 @@ class serveurC extends CI_Controller {
 
 	public function connection_appli_serveur(){
 
-		// Constante pour les types de requêtes
-		define("MODE_ERREUR", 1);       // Aucune requête valide
-		define("MODE_CONNEXION", 2);    // Requête de connexion
+		
 
 		// Récupération de la requête en JSON
 		$mode = MODE_ERREUR;
@@ -34,18 +36,39 @@ class serveurC extends CI_Controller {
 			$reponse = array('reponse' => array('code' => 'ERR'));
 			header("Content-type: application/json");
 			echo json_encode($reponse);
+			die();
 		}
 
-		// Requête de connexion
 		if($mode == MODE_CONNEXION) 
 		{
+
+			//$requete['connexion'] = array('login' => "audre001",'password' => "admin" );
 			if(isset($requete['connexion']['login']) && isset($requete['connexion']['password'])) 
 			{
 				$login = strtoupper($requete['connexion']['login']);
-				$password = $requete['connexion']['password'];
+				$password = md5($requete['connexion']['password']);
 				$personne = new personneC();
+				$test = NULL;
 				
-				if($personne->connexion($login,$password))
+				try
+		{
+			$bdd = new PDO('mysql:host=localhost;dbname=606', 'root', 'root');
+		}
+		catch (Exception $e)
+		{
+		        die('Erreur : ' . $e->getMessage());
+		}
+
+		$reponse_sql = $bdd->query("SELECT * 
+								FROM personne 
+								WHERE LOGIN LIKE '{$login}' 
+									AND PASSWORD LIKE '{$password}'");
+		
+
+		
+		$test = $reponse_sql->fetch(PDO::FETCH_OBJ);
+
+				if($test)
 				{
 					$reponse = array('reponse' => array('code' => 'OK'));
 				}
@@ -53,24 +76,121 @@ class serveurC extends CI_Controller {
 				{
 					$reponse = array('reponse' => array('code' => "KO"));
 				}
+
 			}
 			else
 			{
 				$reponse = array('reponse' => array('code' => 'ERR'));
 			}
 			
+			
+		header("Content-type: application/json");
+		echo json_encode($reponse);
 		}
-			header("Content-type: application/json");
-			echo json_encode($reponse);
 
-					if($monfichier = fopen('log.txt', 'a+'))
+
+					/*if($monfichier = fopen('log.txt', 'a+'))
 					{
 						$ligne = fgets($monfichier);
 						$foo = print_r("toto", true);
 						fwrite($monfichier, $foo);
 						fclose($monfichier);
-					}
+					}*/
 
+
+
+	}
+
+	public function save_date($l,$ID,$GRAINE,$note){
+echo $l." ".$ID." ".$GRAINE." ".$note;
+		// Récupération de la requête en JSON
+		$mode = MODE_ERREUR;
+		$var = @file_get_contents('php://input');
+		if(($requete = json_decode($var, true, 3)) !== NULL) {
+			if(isset($requete['connexion']))	
+				$mode = MODE_CONNEXION;
+		}
+
+		
+
+		// Mode erreur
+		/*if($mode == MODE_ERREUR) {
+			$reponse = array('reponse' => array('code' => 'ERR'));
+			header("Content-type: application/json");
+			echo json_encode($reponse);
+			die();
+		}*/
+$mode = MODE_CONNEXION;
+		if($mode == MODE_CONNEXION) 
+		{
+echo "\nla\n";
+			$requete['save']['login'] = $l;
+			$requete['save']['nom_exercice'] = $ID;
+			$requete['save']['percent'] = $note;
+			$requete['save']['graine'] = $GRAINE;
+			if(isset($requete['save']['login']) 
+				&& isset($requete['save']['nom_exercice'])
+				&& isset($requete['save']['percent'])
+				&& isset($requete['save']['graine'])
+				) 
+			{
+				$login = strtoupper($requete['save']['login']);
+				$NOM_EXERCICE = strtoupper($requete['save']['nom_exercice']);
+				$GRAINE = $requete['save']['graine'];
+				$PERCENT = $requete['save']['percent'];
+				$DATE = NULL;
+				
+				try
+		{
+			$bdd = new PDO('mysql:host=localhost;dbname=606', 'root', 'root');
+		}
+		catch (Exception $e)
+		{
+		        die('Erreur : ' . $e->getMessage());
+		}
+echo "hello";
+		$reponse_sql1 = $bdd->query("SELECT *
+										FROM `exercice`
+										WHERE `LIB_EXERCICE` LIKE '{$NOM_EXERCICE}'");
+		$ID_EXERCICE = $reponse_sql1->fetch(PDO::FETCH_ASSOC);
+		$ID_EXERCICE = $ID_EXERCICE['ID_EXERCICE'];
+echo($ID_EXERCICE);
+echo "coucou";
+		$reponse_sql2 = $bdd->query("INSERT INTO `exercer`
+									(`ID_EXERCICE`, 
+									`GRAINE`, 
+									`PERCENT`,
+									`DATE`, 
+									`ID_PERSONNE`) 
+									select {$ID_EXERCICE},'{$GRAINE}',{$PERCENT},NULL,
+									p.`ID_PERSONNE`
+											FROM personne p
+											WHERE `LOGIN` LIKE '{$login}'
+								");
+		
+
+		
+		$test = $reponse_sql2->fetch(PDO::FETCH_OBJ);
+
+				if($test)
+				{
+					$reponse = array('reponse' => array('code' => 'OK'));
+				}
+				else
+				{
+					$reponse = array('reponse' => array('code' => "KO"));
+				}
+
+			}
+			else
+			{
+				$reponse = array('reponse' => array('code' => 'ERR'));
+			}
+			
+			
+		header("Content-type: application/json");
+		echo json_encode($reponse);
+		}
 
 
 	}
