@@ -21,10 +21,13 @@ class serveurC extends CI_Controller {
 
 		// Récupération de la requête en JSON
 		$mode = MODE_ERREUR;
-		if(($requete = json_decode(@file_get_contents('php://input'), true, 3)) !== NULL) {
+		$var = @file_get_contents('php://input');
+		if(($requete = json_decode($var, true, 3)) !== NULL) {
 			if(isset($requete['connexion']))	
 				$mode = MODE_CONNEXION;
 		}
+
+		
 
 		// Mode erreur
 		if($mode == MODE_ERREUR) {
@@ -34,30 +37,39 @@ class serveurC extends CI_Controller {
 		}
 
 		// Requête de connexion
-		if($mode == MODE_CONNEXION) {
-			if(isset($requete['connexion']['login']) && isset($requete['connexion']['password'])) {
+		if($mode == MODE_CONNEXION) 
+		{
+			if(isset($requete['connexion']['login']) && isset($requete['connexion']['password'])) 
+			{
 				$login = strtoupper($requete['connexion']['login']);
 				$password = $requete['connexion']['password'];
-
 				$personne = new personneC();
 				
-				
-
-
 				if($personne->connexion($login,$password))
-				//if((strcmp($login, "toto") == 0) && (strcmp($password, "toto") == 0))
+				{
 					$reponse = array('reponse' => array('code' => 'OK'));
+				}
 				else
+				{
 					$reponse = array('reponse' => array('code' => "KO"));
+				}
 			}
 			else
+			{
 				$reponse = array('reponse' => array('code' => 'ERR'));
-
+			}
+			
+		}
 			header("Content-type: application/json");
 			echo json_encode($reponse);
-}
 
-
+					if($monfichier = fopen('log.txt', 'a+'))
+					{
+						$ligne = fgets($monfichier);
+						$foo = print_r("toto", true);
+						fwrite($monfichier, $foo);
+						fclose($monfichier);
+					}
 
 
 

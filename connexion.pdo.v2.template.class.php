@@ -94,7 +94,7 @@ final class myPDO
     /// Singleton
     private static $mypdo = null ;
     /// Message de debogage
-    private static $debug = true ;
+    private static $debug = false ;
     /// Data Source Name
     private static $dsn   = null ;
     /// Utilisateur
