@@ -53,6 +53,10 @@ class Welcome extends CI_Controller {
 		$this->load->view('connexion');
 	}
 
+	public function stats(){
+		$this->load->view('stats');
+	}
+
 	public function redirect()
 	{
 		$data['title'] = 'Accueil';
@@ -68,15 +72,14 @@ class Welcome extends CI_Controller {
 				if($personne->connexion(strtoupper ($_POST['login']), $_POST['pass']))
 				{
 					$P = $personne->getPersonneByLogin($_POST['login']);
-					//Gestion erreurs
+					//Gestion des erreurs à faire.
 					
 					$_SESSION['login'] = $_POST['login'];
+					$_SESSION['profil'] = $P['profil'];
+					$_SESSION['id'] = $P['id']
 					$_SESSION['nom'] = $P['nom'];
 					$_SESSION['prenom'] = $P['prenom'];
-					$_SESSION['profil'] = $P['profil'];
-					/*var_dump($P);
-					var_dump($_SESSION['profil']=="Professeur");*/
-										
+
 				}
 	    	}
 
