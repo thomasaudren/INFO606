@@ -1,6 +1,6 @@
 <?php
 
-include "/var/www/html/INFO606/application/models/personneM.php";
+include "/application/models/personneM.php";
 
 class personneC
 {	

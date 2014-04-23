@@ -1,5 +1,6 @@
 html{
-	background: url("../img/background/cubes.png");
+	background: url("../img/background/background.png");
+    background-size:100%;
 }
 .case{
 	display: inline;

@@ -1,4 +1,4 @@
-<div id='content'>
+<div id='content' style='margin-left:10%'>
 	<div class='rowOne'>
 		<div class='case'>
 			<img src=<?php echo base_url().'application/assets/img/icons/Stats.png' ?> />
