@@ -56,6 +56,7 @@ p {
 <body>
 	<div id="container">
 		<h1><?php echo $heading; ?></h1>
+		<img src="http://us.cdn4.123rf.com/168nwm/chudtsankov/chudtsankov1204/chudtsankov120400051/13299042-heureux-professeur-black-ou-hispanique-utilisation-d-39-un-memory-pointeur.jpg" />
 		<?php echo $message; ?>
 	</div>
 </body>

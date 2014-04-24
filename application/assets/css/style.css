@@ -1,6 +1,8 @@
 html{
 	background: url("../img/background/background.png");
-    background-size:100%;
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+    background-size: cover; 
 }
 .case{
 	display: inline;

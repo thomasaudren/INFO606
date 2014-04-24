@@ -1,12 +1,12 @@
 <?php 
 
-include "exerciceM.php";
+include "eleveM.php";
 
 ini_set('display_errors', 1);
 
-$m = new exerciceM();
+$m = new eleveM();
 try{
-	$m->ajoutExercice("France", "1", "1", "1");
+	$m->recupElevesByProf(2);
 } 
 catch (PDOException $e) {
 echo"<pre>";

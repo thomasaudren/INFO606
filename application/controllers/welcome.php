@@ -76,7 +76,7 @@ class Welcome extends CI_Controller {
 					
 					$_SESSION['login'] = $_POST['login'];
 					$_SESSION['profil'] = $P['profil'];
-					$_SESSION['id'] = $P['id']
+					$_SESSION['id'] = $P['id'];
 					$_SESSION['nom'] = $P['nom'];
 					$_SESSION['prenom'] = $P['prenom'];
 

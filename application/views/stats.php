@@ -1,12 +1,32 @@
-<?php $this->load->view('template/header'); ?>
+<?php 
 
-<h1 class="page-header">Vos élèves</h1>
-<div class="ui-group">
+include '/application/controllers/eleveC.php';
+include '/application/controllers/classeC.php';
+include '/application/controllers/professeurC.php';
+$eleveC = new eleveC(); 
+$classeC = new classeC(); 
+$professeurC = new professeurC();
+$data['title'] = 'Statistiques';
+$this->load->view('template/header', $data); ?>
+
+<h1 class="page-header" style='text-align:center'>Vos élèves</h1>
+
+<div class="ui-group" style='text-align:center'>
         <div id="filters" class="filters button-group js-radio-button-group">
-          <button class="btn is-checked" data-filter="*">show all</button>
-          <button class="btn" data-filter=".metal">metal</button>
-          <button class="btn" data-filter=".transition">transition</button>
-          <button class="btn" data-filter="ium">–ium</button>
+<?php 
+	
+	$classes = $professeurC->getClassesById($_SESSION['id']);
+	
+	$i=0;
+	$menu="<button class='btn is-checked' data-filter='*'>Tous</button>\t";
+	while($i < sizeof($classes))
+	{
+		$menu.="<button class='btn' data-filter='.".$classes[$i]['lib']."'>".$classes[$i]['lib']."</button>\t";
+		$i++;
+	}
+
+	echo $menu;
+?>
         </div>
 </div>
 <hr>
@@ -15,15 +35,21 @@
 <?php
 
 $dirname = 'c:/wamp/www/INFO606/application/assets/eleves/';
-$dir = opendir($dirname); 
+$dir = opendir($dirname);
 $trimmed = substr($dirname, 20);
 $res="<table border='0' cellpading='0'><tr>";
-while($file = readdir($dir)) {
-	if($file != '.' && $file != '..' && !is_dir($dirname.$file))
-	{
-		$res.='<td><img class="item transition" style="height:100px;width:100px;float:left;" src="../'.$trimmed.$file.'">';
-	}
+$eleves = $eleveC->recupElevesByProf($_SESSION['id']);
+
+$i=0;
+
+while ($i < sizeof($eleves)) 
+{
+	$classe = $classeC->getClasseById($eleves[$i]['idClasseEleve']);
+	$res.="<td><img class='img-circle item ".$classe['lib']."' style='height:100px;width:100px;float:left;' src='".base_url()."application/assets/eleves/".$eleves[$i]['loginEleve'].".png'>";
+	
+	$i++;
 }
+
 $res.='</table>';
 closedir($dir);
 	echo $res;
