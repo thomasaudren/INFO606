@@ -45,7 +45,7 @@ $i=0;
 while ($i < sizeof($eleves)) 
 {
 	$classe = $classeC->getClasseById($eleves[$i]['idClasseEleve']);
-	$res.="<td><img class='img-circle item ".$classe['lib']."' style='height:100px;width:100px;float:left;' src='".base_url()."application/assets/eleves/".$eleves[$i]['loginEleve'].".png'>";
+	$res.="<td><img class='img-circle item ".$classe['lib']."' style='height:100px;width:100px;float:left;' name='".$eleves[$i]['loginEleve']."' src='".base_url()."application/assets/eleves/".$eleves[$i]['loginEleve'].".png'>";
 	
 	$i++;
 }
@@ -60,7 +60,7 @@ closedir($dir);
 <link href="../application/assets/css/sb-admin.css" rel="stylesheet"></link>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="../application/assets/js/isotope.pkgd.min.js"></script>
-
+<script type="text/javascript" src="../application/assets/js/script.js"></script>
 <script type="text/javascript">
 var $container = $('#container');
 // init
@@ -80,17 +80,6 @@ $container.isotope({
 	$('#filters').on( 'click', 'button', function() {
 	  var filterValue = $(this).attr('data-filter');
 	  $container.isotope({ filter: filterValue });
-	});
-
-
-	$('img').click(function(){
-			$.ajax({
-	  url: "statsBy",
-	  data: { name: "WAYNE001" },
-		}).done(function(html) {
-			$('#container').empty();
-		  	$('#container').append(html);
-		});
 	});
 </script>
 

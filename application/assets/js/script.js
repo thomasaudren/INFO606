@@ -1,0 +1,1 @@
+$("img").click(function(){var e=$(this).attr("name");$.ajax({url:"statsBy",type:"POST",data:{name:e}}).done(function(e){$("#container").empty();$("#container").append(e)})})

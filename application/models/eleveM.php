@@ -61,4 +61,31 @@ SQL
 		return $ret;
 	}
 
+	public function getExercicesByIdEleve($id)
+	{
+		$ret; $i=0;
+		$stmt = myPDO::donneInstance()->prepare(<<<SQL
+			SELECT * FROM EXERCER ex, EXERCICE exercice, MATIERE ma WHERE ex.id_personne = '{$id}' 
+			AND ex.id_exercice = exercice.id_exercice AND exercice.id_matiere = ma.id_matiere 
+SQL
+);
+		$stmt->execute();
+
+
+		while($res = $stmt->fetch(PDO::FETCH_ASSOC))
+		{
+	          $ret[$i]['libExo'] = $res['LIB_EXERCICE'];
+	          $ret[$i]['libMat'] = $res['LIB_MATIERE'];
+	          $ret[$i]['percent'] = $res['PERCENT'];
+	          $ret[$i]['graine'] = $res['GRAINE'];
+	          $i++;
+		}
+		if($i==0)
+		{
+			$ret[$i]['error']= "Cet élève n'a fait aucun exercice...";
+		}
+
+		return $ret;
+	}
+
 }

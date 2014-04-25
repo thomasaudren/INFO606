@@ -20,4 +20,9 @@ class eleveC
 	{
 		return $this->eleve->getClasseById($id);
 	}
+
+	public function getExercicesByIdEleve($id)
+	{
+		return $this->eleve->getExercicesByIdEleve($id);
+	}
 }

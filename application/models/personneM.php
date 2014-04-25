@@ -57,6 +57,7 @@ SQL
 			  $ret['profil']=$this->getProfilById($res['id_personne']);
 			  $ret['id']=$res['id_personne'];
 		}
+
 	    return $ret;
 	}
 
