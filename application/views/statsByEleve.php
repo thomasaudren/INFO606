@@ -38,9 +38,20 @@ else
 		$i++;
 	}
 	$ret.='</table><br><hr>';
-}
+
 
 $ret.='<div id="chartsMaths" style="width:50%; height:400px;display: inline-block;"></div><div id="chartsFrancais" style="width:50%; height:400px;display: inline-block;"></div>';
+
+$stats = $eleveC->getMoyenneMathsById($idEleve);
+$moyenne = 0;
+$i=0;
+while($i<sizeof($stats))
+{
+	$moyenne=$moyenne+$stats[$i]['percent'];
+	$i++;
+}
+$moyenne = $moyenne/sizeof($stats);
+
 $ret.="<script>$(function () { 
     $('#chartsMaths').highcharts({
         chart: {
@@ -71,19 +82,23 @@ $ret.="<script>$(function () {
             type: 'pie',
             name: 'Mathématiques',
             data: [
-                ['% de réussite ',       100],
-                ['% d\'échec ', 0]
-                /*{
-                    name: '',
-                    y: 10,
-                    sliced: true,
-                    selected: true
-                }*/
+                ['% de réussite ',  $moyenne],
+                ['% d\'échec ', 100-$moyenne]
             ]
         }]
     });
 });
 </script>";
+
+$stats = $eleveC->getMoyenneFraById($idEleve);
+$moyenne = 0;
+$i=0;
+while($i<sizeof($stats))
+{
+	$moyenne=$moyenne+$stats[$i]['percent'];
+	$i++;
+}
+$moyenne = $moyenne/sizeof($stats);
 
 $ret.="<script>$(function () { 
     $('#chartsFrancais').highcharts({
@@ -115,8 +130,8 @@ $ret.="<script>$(function () {
             type: 'pie',
             name: 'Mathématiques',
             data: [
-                ['% de réussite ',       100],
-                ['% d\'échec ', 0]
+                ['% de réussite ',  $moyenne],
+                ['% d\'échec ', 100-$moyenne]
                 /*{
                     name: '',
                     y: 10,
@@ -128,6 +143,8 @@ $ret.="<script>$(function () {
     });
 });
 </script>";
+
+}
 
 echo $ret;
 ?>

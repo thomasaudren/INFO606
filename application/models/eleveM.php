@@ -88,4 +88,42 @@ SQL
 		return $ret;
 	}
 
+
+	public function getMoyenneMathsById($id)
+	{
+		$ret; $i=0;
+		$stmt = myPDO::donneInstance()->prepare(<<<SQL
+			SELECT PERCENT FROM EXERCER ex, EXERCICE exercice, MATIERE ma WHERE ex.id_personne = '{$id}' 
+			AND ex.id_exercice = exercice.id_exercice AND exercice.id_matiere = ma.id_matiere AND ma.lib_matiere='Mathématiques'
+SQL
+);
+		$stmt->execute();
+
+		while($res = $stmt->fetch(PDO::FETCH_ASSOC))
+		{
+	          $ret[$i]['percent'] = $res['PERCENT'];
+	          $i++;
+		}
+
+		return $ret;
+	}
+
+	public function getMoyenneFraById($id)
+	{
+		$ret; $i=0;
+		$stmt = myPDO::donneInstance()->prepare(<<<SQL
+			SELECT PERCENT FROM EXERCER ex, EXERCICE exercice, MATIERE ma WHERE ex.id_personne = '{$id}' 
+			AND ex.id_exercice = exercice.id_exercice AND exercice.id_matiere = ma.id_matiere AND ma.lib_matiere='Français'
+SQL
+);
+		$stmt->execute();
+
+		while($res = $stmt->fetch(PDO::FETCH_ASSOC))
+		{
+	          $ret[$i]['percent'] = $res['PERCENT'];
+	          $i++;
+		}
+
+		return $ret;
+	}
 }

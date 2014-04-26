@@ -25,4 +25,14 @@ class eleveC
 	{
 		return $this->eleve->getExercicesByIdEleve($id);
 	}
+
+	public function getMoyenneMathsById($id)
+	{
+		return $this->eleve->getMoyenneMathsById($id);
+	}
+
+	public function getMoyenneFraById($id)
+	{
+		return $this->eleve->getMoyenneFraById($id);
+	}
 }
