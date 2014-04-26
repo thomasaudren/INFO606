@@ -59,6 +59,7 @@ closedir($dir);
 
 <link href="../application/assets/css/sb-admin.css" rel="stylesheet"></link>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript" src="../application/assets/js/isotope.pkgd.min.js"></script>
 <script type="text/javascript" src="../application/assets/js/script.js"></script>
 <script type="text/javascript">

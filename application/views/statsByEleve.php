@@ -40,16 +40,94 @@ else
 	$ret.='</table><br><hr>';
 }
 
+$ret.='<div id="chartsMaths" style="width:50%; height:400px;display: inline-block;"></div><div id="chartsFrancais" style="width:50%; height:400px;display: inline-block;"></div>';
+$ret.="<script>$(function () { 
+    $('#chartsMaths').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'Mathématiques'
+        },
+        tooltip: {
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor)
+                    }
+                }
+            }
+        },
+       	series: [{
+            type: 'pie',
+            name: 'Mathématiques',
+            data: [
+                ['% de réussite ',       100],
+                ['% d\'échec ', 0]
+                /*{
+                    name: '',
+                    y: 10,
+                    sliced: true,
+                    selected: true
+                }*/
+            ]
+        }]
+    });
+});
+</script>";
 
-
-
-
-
-
-
-
-
-
+$ret.="<script>$(function () { 
+    $('#chartsFrancais').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'Français'
+        },
+        tooltip: {
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor)
+                    }
+                }
+            }
+        },
+       	series: [{
+            type: 'pie',
+            name: 'Mathématiques',
+            data: [
+                ['% de réussite ',       100],
+                ['% d\'échec ', 0]
+                /*{
+                    name: '',
+                    y: 10,
+                    sliced: true,
+                    selected: true
+                }*/
+            ]
+        }]
+    });
+});
+</script>";
 
 echo $ret;
 ?>
