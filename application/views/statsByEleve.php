@@ -40,14 +40,20 @@ else
 	$ret.='</table><br><hr>';
 
 
-$ret.='<div id="chartsMaths" style="width:50%; height:400px;display: inline-block;"></div><div id="chartsFrancais" style="width:50%; height:400px;display: inline-block;"></div>';
+$ret.='<div id="chartsMaths" style="width:50%; height:400px;display: inline-block;"></div><div id="evoMaths" style="width:50%; height:400px;display: inline-block;"></div>';
 
 $stats = $eleveC->getMoyenneMathsById($idEleve);
-$moyenne = 0;
+$moyenne = 0; $xAxis = ""; $yAxis="";
 $i=0;
 while($i<sizeof($stats))
 {
 	$moyenne=$moyenne+$stats[$i]['percent'];
+	if($i<10)
+	{
+			$yAxis.=$stats[$i]['percent'].", ";
+			$xAxis.="'".$stats[$i]['date']." (".$stats[$i]['lib'].")', ";
+	}
+
 	$i++;
 }
 $moyenne = $moyenne/sizeof($stats);
@@ -90,12 +96,56 @@ $ret.="<script>$(function () {
 });
 </script>";
 
+$ret.="<script>
+$(function () {
+        $('#evoMaths').highcharts({
+            title: {
+                text: 'Evolution Mathématiques',
+                x: -20 //center
+            },
+            xAxis: {
+                categories: [$xAxis]
+            },
+            yAxis: {
+                title: {
+                    text: 'Pourcentage (%)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: '%'
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [{
+                name: 'Mathématiques',
+                data: [$yAxis]
+            }]
+        });
+    });
+</script>";
+
+$ret.='</div><div id="chartsFrancais" style="width:50%; height:400px;display: inline-block;"></div></div><div id="evoFra" style="width:50%; height:400px;display: inline-block;"></div>';
+
 $stats = $eleveC->getMoyenneFraById($idEleve);
-$moyenne = 0;
+$moyenne = 0; $xAxis = ""; $yAxis="";
 $i=0;
 while($i<sizeof($stats))
 {
 	$moyenne=$moyenne+$stats[$i]['percent'];
+	if($i<10)
+	{
+			$yAxis.=$stats[$i]['percent'].", ";
+			$xAxis.="'".$stats[$i]['date']." (".$stats[$i]['lib'].")', ";
+	}
 	$i++;
 }
 $moyenne = $moyenne/sizeof($stats);
@@ -142,6 +192,43 @@ $ret.="<script>$(function () {
         }]
     });
 });
+</script>";
+
+$ret.="<script>
+$(function () {
+        $('#evoFra').highcharts({
+            title: {
+                text: 'Evolution Français',
+                x: -20 //center
+            },
+            xAxis: {
+                categories: [$xAxis]
+            },
+            yAxis: {
+                title: {
+                    text: 'Pourcentage (%)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: '%'
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [{
+                name: 'Français',
+                data: [$yAxis]
+            }]
+        });
+    });
 </script>";
 
 }

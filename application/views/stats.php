@@ -9,6 +9,7 @@ $professeurC = new professeurC();
 $data['title'] = 'Statistiques';
 $this->load->view('template/header', $data); ?>
 
+<div id="head">
 <h1 class="page-header" style='text-align:center'>Vos élèves</h1>
 
 <div class="ui-group" style='text-align:center'>
@@ -30,6 +31,8 @@ $this->load->view('template/header', $data); ?>
         </div>
 </div>
 <hr>
+</div>
+<div id="head_custom"></div>
 	<div id="container">
 
 <?php
@@ -56,6 +59,7 @@ closedir($dir);
 
 ?>
 	</div>
+<div id="container_custom"></div>
 
 <link href="../application/assets/css/sb-admin.css" rel="stylesheet"></link>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -87,16 +91,5 @@ $container.isotope({
 <?php
 
 $this->load->view("template/footer");
-
-
-/*SELECT * FROM PERSONNE WHERE id_profil = '2'*/
-
-//Recup de l'id personne 
-
-//SELECT * FROM EXERCER WHERE id_personne = id_personne 
-
-//Recup de l'id exercice
-// de la graine
-//du score
 
 ?>

@@ -1,1 +1,2 @@
-$("img").click(function(){var e=$(this).attr("name");$.ajax({url:"statsBy",type:"POST",data:{name:e}}).done(function(e){$("#container").empty();$("#container").append(e)})})
+$("img").click(function(){var e=$(this).attr("name");$.ajax({url:"statsBy",type:"POST",data:{name:e}}).done(function(html){$("#container").hide();$("#head").hide();$("#container_custom").append(html);$("#head_custom").append("<input style='margin-left:2%;margin-top:-4%' type='button' class='btn btn-danger' OnClick='back()' value='Retour'></input><h1 style='text-align:center;margin-top:-4%'>"+e+"</h1>")})}) 
+function back(){$('#container_custom').empty();$('#head_custom').empty();$('#container').show();$('#head').show();}

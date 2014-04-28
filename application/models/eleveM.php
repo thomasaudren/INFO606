@@ -93,7 +93,7 @@ SQL
 	{
 		$ret; $i=0;
 		$stmt = myPDO::donneInstance()->prepare(<<<SQL
-			SELECT PERCENT FROM EXERCER ex, EXERCICE exercice, MATIERE ma WHERE ex.id_personne = '{$id}' 
+			SELECT PERCENT, LIB_EXERCICE, ex.DATE FROM EXERCER ex, EXERCICE exercice, MATIERE ma WHERE ex.id_personne = '{$id}' 
 			AND ex.id_exercice = exercice.id_exercice AND exercice.id_matiere = ma.id_matiere AND ma.lib_matiere='Mathématiques'
 SQL
 );
@@ -102,6 +102,8 @@ SQL
 		while($res = $stmt->fetch(PDO::FETCH_ASSOC))
 		{
 	          $ret[$i]['percent'] = $res['PERCENT'];
+	          $ret[$i]['lib'] = $res['LIB_EXERCICE'];
+	          $ret[$i]['date'] = $res['DATE'];
 	          $i++;
 		}
 
@@ -112,7 +114,7 @@ SQL
 	{
 		$ret; $i=0;
 		$stmt = myPDO::donneInstance()->prepare(<<<SQL
-			SELECT PERCENT FROM EXERCER ex, EXERCICE exercice, MATIERE ma WHERE ex.id_personne = '{$id}' 
+			SELECT PERCENT, LIB_EXERCICE, ex.DATE FROM EXERCER ex, EXERCICE exercice, MATIERE ma WHERE ex.id_personne = '{$id}' 
 			AND ex.id_exercice = exercice.id_exercice AND exercice.id_matiere = ma.id_matiere AND ma.lib_matiere='Français'
 SQL
 );
@@ -121,6 +123,8 @@ SQL
 		while($res = $stmt->fetch(PDO::FETCH_ASSOC))
 		{
 	          $ret[$i]['percent'] = $res['PERCENT'];
+	          $ret[$i]['lib'] = $res['LIB_EXERCICE'];
+	          $ret[$i]['date'] = $res['DATE'];
 	          $i++;
 		}
 
