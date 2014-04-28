@@ -11,7 +11,7 @@ $this->load->view('template/header', $data); ?>
 
 <div id="head">
 <h1 class="page-header" style='text-align:center'>Vos élèves</h1>
-
+<a style='margin-left:2%;margin-top:-4%' type='button' class='btn btn-danger' href="/INFO606/welcome/redirect">Retour</a>
 <div class="ui-group" style='text-align:center'>
         <div id="filters" class="filters button-group js-radio-button-group">
 <?php 
