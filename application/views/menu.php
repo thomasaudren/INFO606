@@ -18,7 +18,7 @@
 	</div>
 	<div class='rowTwo'>
 		<div class='case'>
-			<img src=<?php echo base_url().'application/assets/img/icons/Parametre.png' ?> />
+			<a href="/INFO606/welcome/param"><img src=<?php echo base_url().'application/assets/img/icons/Parametre.png' ?> /></a>
 		</div>
 		<div class='case'>
 			<img src=<?php echo base_url().'application/assets/img/icons/Correspondance.png' ?> />

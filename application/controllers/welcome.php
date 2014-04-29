@@ -80,6 +80,10 @@ class Welcome extends CI_Controller {
 		$this->load->view('init');
 	}
 
+	public function param(){
+		$this->load->view('param');
+	}
+
 	public function redirect()
 	{
 		$data['title'] = 'Accueil';
