@@ -34,9 +34,24 @@ class Welcome extends CI_Controller {
 		// définition des données variables du template
 	    $data['title'] = 'Connexion';
 	     
-	 
+	 	if(isset($_SESSION['id']))
+	 	{
+	 		$data['title'] = 'Accueil';
+	 		if($_SESSION['profil']=="Professeur")
+			{
+				$data['contents'] = 'menu';
+			}
+			else if($_SESSION['profil']=="Developpeur")
+			{
+				$data['contents'] = 'Form';
+			}
+	 		$this->load->view('template/template', $data);
+	 	}
 	    // on charge la page dans le template
-	    $this->load->view('connexion');
+	    else 
+	    {
+	    	$this->load->view('connexion');
+	    }
 
 	}
 	public function test($graine){
