@@ -61,6 +61,10 @@ class Welcome extends CI_Controller {
 		$this->load->view('statsByEleve');
 	}
 
+	public function init(){
+		$this->load->view('init');
+	}
+
 	public function redirect()
 	{
 		$data['title'] = 'Accueil';

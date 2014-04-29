@@ -1,7 +1,7 @@
 <?php
 
 
-include "../../connexion.php";
+include "connexion.php";
 
 class exerciceM
 {
