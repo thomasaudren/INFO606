@@ -52,7 +52,7 @@ class serveurC extends CI_Controller {
 				
 				try
 		{
-			$bdd = new PDO('mysql:host=localhost;dbname=606', 'root', 'root');
+			$bdd = new PDO('mysql:host=localhost;dbname=606', 'root', '');
 		}
 		catch (Exception $e)
 		{
@@ -101,33 +101,23 @@ class serveurC extends CI_Controller {
 
 	}
 
-	public function save_date($l,$ID,$GRAINE,$note){
-echo $l." ".$ID." ".$GRAINE." ".$note;
+	public function save_date(){
+//echo $l." ".$ID." ".$GRAINE." ".$note;
 		// Récupération de la requête en JSON
-		$mode = MODE_ERREUR;
 		$var = @file_get_contents('php://input');
-		if(($requete = json_decode($var, true, 3)) !== NULL) {
-			if(isset($requete['connexion']))	
-				$mode = MODE_CONNEXION;
-		}
-
+		$requete = json_decode($var, true,3);
+		
 		
 
-		// Mode erreur
-		/*if($mode == MODE_ERREUR) {
-			$reponse = array('reponse' => array('code' => 'ERR'));
-			header("Content-type: application/json");
-			echo json_encode($reponse);
-			die();
-		}*/
-$mode = MODE_CONNEXION;
-		if($mode == MODE_CONNEXION) 
-		{
-echo "\nla\n";
-			$requete['save']['login'] = $l;
+		
+//$mode = MODE_CONNEXION;
+		
+//echo "\nla\n";
+			/*$requete['save']['login'] = $l;
 			$requete['save']['nom_exercice'] = $ID;
 			$requete['save']['percent'] = $note;
-			$requete['save']['graine'] = $GRAINE;
+			$requete['save']['graine'] = $GRAINE;*/
+			echo json_encode($requete);
 			if(isset($requete['save']['login']) 
 				&& isset($requete['save']['nom_exercice'])
 				&& isset($requete['save']['percent'])
@@ -142,20 +132,20 @@ echo "\nla\n";
 				
 				try
 		{
-			$bdd = new PDO('mysql:host=localhost;dbname=606', 'root', 'root');
+			$bdd = new PDO('mysql:host=localhost;dbname=606', 'root', '');
 		}
 		catch (Exception $e)
 		{
 		        die('Erreur : ' . $e->getMessage());
 		}
-echo "hello";
+//echo "hello";
 		$reponse_sql1 = $bdd->query("SELECT *
 										FROM `exercice`
 										WHERE `LIB_EXERCICE` LIKE '{$NOM_EXERCICE}'");
 		$ID_EXERCICE = $reponse_sql1->fetch(PDO::FETCH_ASSOC);
 		$ID_EXERCICE = $ID_EXERCICE['ID_EXERCICE'];
-echo($ID_EXERCICE);
-echo "coucou";
+//echo " id exo".($ID_EXERCICE);
+//echo "coucou";
 		$reponse_sql2 = $bdd->query("INSERT INTO `exercer`
 									(`ID_EXERCICE`, 
 									`GRAINE`, 
@@ -168,9 +158,8 @@ echo "coucou";
 											WHERE `LOGIN` LIKE '{$login}'
 								");
 		
-
-		
-		$test = $reponse_sql2->fetch(PDO::FETCH_OBJ);
+	
+		$test = $reponse_sql2;
 
 				if($test)
 				{
@@ -190,7 +179,7 @@ echo "coucou";
 			
 		header("Content-type: application/json");
 		echo json_encode($reponse);
-		}
+		
 
 
 	}

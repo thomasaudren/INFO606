@@ -19,21 +19,21 @@ if(isset($res[0]['error']))
 }
 else
 {
-	$ret.='<table class="table table-bordered"><thead><tr><th>Nom de l\'exercice<th>Matière<th>Score</tr>';
+	$ret.='<table class="table table-bordered"><thead><tr><th>Nom de l\'exercice<th>Matière<th>Score<th>Replay</tr>';
 	while ($i < sizeof($res))
 	{
 		//La graine se récupère aussi via $res[$i]['graine'];
 		if($res[$i]['percent']>50)
 		{
-			$ret.="<tr class='success'><td>".$res[$i]['libExo']."<td>".$res[$i]['libMat']."<td>".$res[$i]['percent'];
+			$ret.="<tr class='success'><td>".$res[$i]['libExo']."<td>".$res[$i]['libMat']."<td>".$res[$i]['percent']."<td><a class='seed' href='replay/".$res[$i]['libExo']."/".$res[$i]['graine']."'>Replay</a></td>";
 		}
 		else if($res[$i]['percent']<50)
 		{
-			$ret.="<tr class='danger'><td>".$res[$i]['libExo']."<td>".$res[$i]['libMat']."<td>".$res[$i]['percent'];
+			$ret.="<tr class='danger'><td>".$res[$i]['libExo']."<td>".$res[$i]['libMat']."<td>".$res[$i]['percent']."<td><a class='seed' href='replay/".$res[$i]['libExo']."/".$res[$i]['graine']."'>Replay</a></td>";
 		}
 		else if($res[$i]['percent']==50)
 		{
-			$ret.="<tr class='warning'><td>".$res[$i]['libExo']."<td>".$res[$i]['libMat']."<td>".$res[$i]['percent'];	
+			$ret.="<tr class='warning'><td>".$res[$i]['libExo']."<td>".$res[$i]['libMat']."<td>".$res[$i]['percent']."<td><a class='seed' href='replay/".$res[$i]['libExo']."/".$res[$i]['graine']."'>Replay</a></td>";
 		}
 		$i++;
 	}
@@ -229,7 +229,27 @@ $(function () {
             }]
         });
     });
-</script>";
+	</script>
+	
+	<script src='".base_url()."application/assets/js/jquery.colorbox-min.js'></script>
+	<link href=http://localhost/INFO606/application/assets/css/colorbox.css rel='stylesheet' type='text/css'/>
+	<script>
+	
+	$('.seed').colorbox(
+		{
+		iframe:true, 
+		width:'50%',
+		height:'50%',
+		onOpen:function(){
+			var seed = $(this).html();
+			}
+		});
+		</script>
+
+
+
+";
+
 
 }
 

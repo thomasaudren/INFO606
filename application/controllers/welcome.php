@@ -68,6 +68,14 @@ class Welcome extends CI_Controller {
 		$this->load->view('connexion');
 	}
 
+	public function replay($exoName,$seed){
+		//echo $exoName." ".$seed;
+		//echo "coucou";
+		include("/application/assets/exercices/".$exoName."/".$exoName.".php");
+		$tmp = $exoName::fromString($seed);
+		$tmp->afficheRecapitulatif();
+	}
+
 	public function stats(){
 		$this->load->view('stats');
 	}
