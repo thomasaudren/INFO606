@@ -17,11 +17,11 @@
 			<div style='color:white;margin-top:1%' id="identifiant" >
 				<?php echo "Bonjour ".$_SESSION['prenom']." ".$_SESSION['nom']; ?>
 			</div>
-			<div class="notifications">
-				<img height='50px' src=<?php echo base_url().'application/assets/img/icons/Notif.png' ?> />
+			<!--<div class="notifications">
+				<img height='50px' src=<?php //echo base_url().'application/assets/img/icons/Notif.png' ?> />
 				<div id="notif">
 			</div>
-			</div>
+			</div>-->
 			<a href=<?php echo base_url().'welcome/logout' ?>>
 				<img height='50px' src=<?php echo base_url().'application/assets/img/icons/Deco.png' ?> />
 			</a>

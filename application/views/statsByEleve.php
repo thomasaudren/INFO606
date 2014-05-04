@@ -1,7 +1,7 @@
 <?php
 
 include "connexion.php";
-include "/application/controllers/eleveC.php";
+
 $loginEleve = $_POST['name'];
 $personneC = new personneC();
 $eleveC = new eleveC();
@@ -10,6 +10,10 @@ $idEleve = $eleve['id'];
 
 $res = $eleveC->getExercicesByIdEleve($idEleve);
 $ret="";
+
+$ret.="<div><input style='margin-left:2%;margin-top:-5.7%' type='button' class='btn btn-danger' OnClick='back()' value='Retour'></input><h1 
+                style='text-align:center;margin-top:-5.7%'>"
+    .$eleve['nom']." ".$eleve['prenom']."</h1><hr></div>";
 
 $i=0;
 if(isset($res[0]['error']))
@@ -244,12 +248,11 @@ $(function () {
 			var seed = $(this).html();
 			}
 		});
-		</script>
+		</script>";
 
-
-
-";
-
+$ret.='</div><div id="chartsAnglais" style="width:50%; height:400px;display: inline-block;"></div></div><div id="evoAng" style="width:50%; height:400px;display: inline-block;"></div>';
+$ret.='</div><div id="chartsHistoire" style="width:50%; height:400px;display: inline-block;"></div></div><div id="evoHist" style="width:50%; height:400px;display: inline-block;"></div>';
+$ret.='</div><div id="chartsGeo" style="width:50%; height:400px;display: inline-block;"></div></div><div id="evoGeo" style="width:50%; height:400px;display: inline-block;"></div>';
 
 }
 

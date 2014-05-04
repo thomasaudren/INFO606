@@ -1,5 +1,5 @@
 <?php
-include '/application/controllers/exerciceC.php';
+
 $exerciceC = new exerciceC();
 
 /* Création du fichier init + ajout dans la base */

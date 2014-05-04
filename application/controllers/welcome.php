@@ -1,6 +1,12 @@
 <?php 
 
 include 'personneC.php';
+include 'classeC.php';
+include 'eleveC.php';
+include 'professeurC.php';
+include 'matiereC.php';
+include 'niveauC.php';
+include 'agendaC.php';
 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
@@ -43,7 +49,11 @@ class Welcome extends CI_Controller {
 			}
 			else if($_SESSION['profil']=="Developpeur")
 			{
-				$data['contents'] = 'Form';
+				$data['contents'] = 'form';
+			}
+			else if($_SESSION['profil']=="Directeur")
+			{
+				$data['contents'] = 'menu';
 			}
 	 		$this->load->view('template/template', $data);
 	 	}
@@ -76,12 +86,44 @@ class Welcome extends CI_Controller {
 		$tmp->afficheRecapitulatif();
 	}
 
+	public function verifProfilProf()
+	{
+		$res;
+		if($_SESSION['profil']=="Professeur" || $_SESSION['profil']=="Directeur")
+		{
+			$res = true;
+		}
+		else
+		{
+			$res = false;
+		}
+		return $res;
+	}
+
 	public function stats(){
-		$this->load->view('stats');
+		if($this->verifProfilProf())
+		{
+			$this->load->view('stats');
+		}
+		else
+		{
+			$this->redirect();
+		}
 	}
 
 	public function statsBy(){
-		$this->load->view('statsByEleve');
+		if($this->verifProfilProf())
+		{
+			$this->load->view('statsByEleve');
+		}
+		else
+		{
+			$this->redirect();
+		}
+	}
+
+	public function login(){
+		$this->load->view('test');
 	}
 
 	public function init(){
@@ -90,6 +132,64 @@ class Welcome extends CI_Controller {
 
 	public function param(){
 		$this->load->view('param');
+	}
+
+	public function essa(){
+		$this->load->view('test');
+	}
+
+	public function addStudent(){
+		if($this->verifProfilProf())
+		{
+			$personneC = new personneC();
+			$login = $personneC->generateLoginByNomPersonne($_POST['nom']);
+			$personneC->addPersonne($_POST['nom'], $_POST['prenom'], $_POST['birthday'], $login, 1);
+			$personne = $personneC->getPersonneByLogin($login);
+			$personneC->personneToEtablissementByIdPersonneAndIdEtablissement($personne['id'], $_POST['eta']);
+			$personneC->personneToClasseByIdPersonneAndIdClasse($personne['id'], $_POST['classe']);
+
+			header('Location: param');
+		}
+		else
+		{
+			$this->redirect();
+		}
+	}
+
+	public function addClasse(){
+		if($this->verifProfilProf())
+		{
+			$classeC = new classeC();
+			if(empty($_POST['lib']))
+			{
+				$lib = $classeC->generateLibClasseByDefault($_POST['niveau'], $_POST['eta']);
+			}
+			else
+			{
+				$lib = $_POST['lib'];
+			}
+			$classeC->addClasse($_POST['eta'], $_POST['niveau'], $lib);
+
+			header('Location: param');
+		}
+		else
+		{
+			$this->redirect();
+		}
+	}
+
+	public function getClasses()
+	{
+		$classeC = new classeC();
+		$classes = $classeC->getClassesByIdEtablissement($_POST['id']);
+		$i=0; $options="";
+		while($i<sizeof($classes))
+		{
+			$options.="<option value='".$classes[$i]['id']."'>".$classes[$i]['lib']."</option>";
+			$i++;
+		}
+
+		echo $options;
 	}
 
 	public function redirect()
@@ -114,6 +214,12 @@ class Welcome extends CI_Controller {
 					$_SESSION['id'] = $P['id'];
 					$_SESSION['nom'] = $P['nom'];
 					$_SESSION['prenom'] = $P['prenom'];
+
+					if($P['profil']=='Professeur' || $P['profil']=='Directeur')
+					{
+						$PE=$personne->getEtablissementByIdPersonne($P['id']);
+						$_SESSION['idEta'] = $PE[0]['id'];
+					}
 															
 				}
 	    	}
@@ -124,7 +230,7 @@ class Welcome extends CI_Controller {
 			}
 			else if($_SESSION['profil']=="Developpeur")
 			{
-				$data['contents'] = 'Form';
+				$data['contents'] = 'form';
 			}
 						
 		

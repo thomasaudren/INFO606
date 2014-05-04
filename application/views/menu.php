@@ -1,7 +1,7 @@
 <div id='content' style='margin-left:10%'>
 	<div class='rowOne'>
 		<div class='case'>
-			<a href="/INFO606/welcome/stats"><img src=<?php echo base_url().'application/assets/img/icons/Stats.png' ?> /> </a>
+			<a href="/INFO606/welcome/stats"><img src="<?php echo base_url().'application/assets/img/icons/Stats.png' ?>" /></a>
 		</div>
 		<div class='case'>
 			<img src=<?php echo base_url().'application/assets/img/icons/Agenda.png' ?> />
@@ -21,7 +21,7 @@
 			<a href="/INFO606/welcome/param"><img src=<?php echo base_url().'application/assets/img/icons/Parametre.png' ?> /></a>
 		</div>
 		<div class='case'>
-			<img src=<?php echo base_url().'application/assets/img/icons/Correspondance.png' ?> />
+			<!--<img src=<?php // echo base_url().'application/assets/img/icons/Correspondance.png' ?> />-->
 		</div>
 	</div>
 </div>

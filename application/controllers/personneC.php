@@ -22,8 +22,33 @@ class personneC
 		return $this->personne->getPersonneByLogin($log);
 	}
 
-	public function getProfilById($id)
+	public function getProfilByIdPersonne($id)
 	{
-		return $this->personne->getProfilById($id);
+		return $this->personne->getProfilByIdPersonne($id);
+	}
+
+	public function getEtablissementByIdPersonne($id)
+	{
+		return $this->personne->getEtablissementByIdPersonne($id);
+	}
+
+	public function personneToEtablissementByIdPersonneAndIdEtablissement($idPer, $idEta)
+	{
+		return $this->personne->personneToEtablissementByIdPersonneAndIdEtablissement($idPer, $idEta);
+	}
+
+	public function personneToClasseByIdPersonneAndIdClasse($idPer, $idCla)
+	{
+		return $this->personne->personneToClasseByIdPersonneAndIdClasse($idPer, $idCla);
+	}
+
+	public function generateLoginByNomPersonne($nom)
+	{
+		return $this->personne->generateLoginByNomPersonne($nom);
+	}
+
+	public function addPersonne($nom, $prenom, $date, $login, $profil)
+	{
+		return $this->personne->addPersonne($nom, $prenom, $date, $login, $profil);
 	}
 }

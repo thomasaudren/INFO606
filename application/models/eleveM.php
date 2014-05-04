@@ -14,10 +14,10 @@ class eleveM
 		$ret; $i=0;
 		$stmt = myPDO::donneInstance()->prepare(<<<SQL
 		SELECT DISTINCT * 
-		FROM personne p, apartenir_per_cla a
+		FROM personne p, appartenir_per_cla a
 		WHERE p.ID_PERSONNE = a.ID_PERSONNE
-		AND a.ID_CLASSE = (SELECT ID_CLASSE
-                  FROM apartenir_per_cla 
+		AND a.ID_CLASSE IN (SELECT ID_CLASSE
+                  FROM appartenir_per_cla 
                   WHERE ID_PERSONNE = (SELECT ID_PERSONNE 
                                        FROM personne 
                                        WHERE ID_PERSONNE = '{$id}'))
@@ -35,6 +35,10 @@ SQL
 	          $ret[$i]['idClasseEleve']=$res['ID_CLASSE'];
 
 	          $i++;
+		}
+		if($i==0)
+		{
+			$ret[$i]['error']= "Aucune classe Pour ce prof...";
 		}
 
 		return $ret;
@@ -130,4 +134,40 @@ SQL
 
 		return $ret;
 	}
+
+	public function getElevesByEtablissement($id)
+	{
+		$ret; $i=0;
+		$stmt = myPDO::donneInstance()->prepare(<<<SQL
+			SELECT DISTINCT * 
+			FROM personne p, appartenir_per_cla a, appartenir_per_eta ape, profil pr
+			WHERE p.id_personne = a.id_personne
+			AND p.ID_PERSONNE = ape.ID_PERSONNE
+			AND ape.ID_ETABLISSEMENT = (SELECT ID_ETABLISSEMENT 
+	                                       FROM etablissement 
+	                                       WHERE ID_ETABLISSEMENT = '{$id}')
+			AND p.id_profil = pr.id_profil
+			AND pr.lib_profil = 'Eleve' 
+SQL
+);
+		$stmt->execute();
+
+		while($res = $stmt->fetch(PDO::FETCH_ASSOC))
+		{
+	         $ret[$i]['nomEleve']=$res['NOM_PERSONNE'];
+	         $ret[$i]['prenomEleve']=$res['PRENOM_PERSONNE'];
+	         $ret[$i]['loginEleve']=$res['LOGIN'];
+	         $ret[$i]['birthdayEleve']=$res['DATE_NAISSANCE'];
+	         $ret[$i]['idClasseEleve']=$res['ID_CLASSE'];
+
+	          $i++;
+		}
+		if($i==0)
+		{
+			$ret[$i]['error']= "Aucun élève dans l'établissement...";
+		}
+
+		return $ret;
+	}
+
 }

@@ -25,6 +25,10 @@ SQL
 			$ret[$i]['lib'] = $res['LIB_MATIERE'];
 			$i++;
 		}
+		if($i==0)
+		{
+			$ret[$i]['error'] = "Aucune matière";
+		}
 
 		return $ret;
 	}

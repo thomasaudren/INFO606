@@ -35,4 +35,9 @@ class eleveC
 	{
 		return $this->eleve->getMoyenneFraById($id);
 	}
+
+	public function getElevesByEtablissement($id)
+	{
+		return $this->eleve->getElevesByEtablissement($id);
+	}
 }

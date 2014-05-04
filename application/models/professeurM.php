@@ -15,7 +15,7 @@ class professeurM
 		$i=0;
 		$stmt = myPDO::donneInstance()->prepare(<<<SQL
 			SELECT * 
-			FROM classe c, APARTENIR_PER_CLA apc 
+			FROM classe c, APPARTENIR_PER_CLA apc 
 			WHERE c.id_classe = apc.id_classe
 			AND apc.id_personne = '{$id}' 
 SQL
@@ -27,6 +27,10 @@ SQL
 			$ret[$i]['id'] = $res['ID_CLASSE'];
 			$ret[$i]['lib'] = $res['LIB_CLASSE'];
 			$i++;
+		}
+		if($i==0)
+		{
+			$ret[$i]['error']="Pas de classes";
 		}
 
 		return $ret;

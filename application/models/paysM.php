@@ -8,14 +8,13 @@ class paysM
 	{
 	}
 
-	public function creerPays($nom)
+	public function addPays($nom)
 	{
 		$stmt = myPDO::donneInstance()->query(<<<SQL
 			INSERT INTO PAYS (nom_pays)
        		VALUES('{$nom}')
 SQL
 );
-var_dump($stmt->fetch());
 
 	}
 

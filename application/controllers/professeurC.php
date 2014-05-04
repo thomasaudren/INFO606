@@ -15,6 +15,7 @@ class professeurC
 	{
 	 	return $this->professeur->getClassesById($id);
 	}
+
 }
 
 

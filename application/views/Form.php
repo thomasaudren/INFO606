@@ -1,6 +1,5 @@
 <?php
-include '/application/controllers/matiereC.php';
-include '/application/controllers/niveauC.php';
+
 $matiereC = new matiereC();
 $niveauC = new niveauC();
 $matieres = $matiereC->getMatieres();
