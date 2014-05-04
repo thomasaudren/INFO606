@@ -4,7 +4,7 @@
 			<a href="/INFO606/welcome/stats"><img src="<?php echo base_url().'application/assets/img/icons/Stats.png' ?>" /></a>
 		</div>
 		<div class='case'>
-			<img src=<?php echo base_url().'application/assets/img/icons/Agenda.png' ?> />
+			<a href="/INFO606/welcome/agenda"><img src=<?php echo base_url().'application/assets/img/icons/Agenda.png' ?> /></a>
 		</div>
 		<div class='case'>
 			<img src=<?php echo base_url().'application/assets/img/icons/Calendrier.png' ?> />

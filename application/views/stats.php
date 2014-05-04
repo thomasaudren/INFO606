@@ -70,7 +70,7 @@ $trimmed = substr($dirname, 20);
 $res="<table border='0' cellpading='0'><tr>";
 if($_SESSION['profil']=="Professeur")
 {
-	$eleves = $eleveC->recupElevesByProf($_SESSION['id']);	
+	$eleves = $eleveC->getElevesByIdProf($_SESSION['id']);	
 }
 else if($_SESSION['profil']=='Directeur')
 {

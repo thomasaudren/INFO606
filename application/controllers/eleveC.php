@@ -11,9 +11,9 @@ class eleveC
 		$this->eleve= new eleveM;
 	}
 
-	public function recupElevesByProf($id)
+	public function getElevesByIdProf($id)
 	{
-	 	return $this->eleve->recupElevesByProf($id);
+	 	return $this->eleve->getElevesByIdProf($id);
 	}
 
 	public function getClasseById($id)

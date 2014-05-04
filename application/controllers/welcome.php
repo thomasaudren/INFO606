@@ -7,6 +7,7 @@ include 'professeurC.php';
 include 'matiereC.php';
 include 'niveauC.php';
 include 'agendaC.php';
+include 'utilsC.php';
 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
@@ -136,6 +137,47 @@ class Welcome extends CI_Controller {
 
 	public function essa(){
 		$this->load->view('test');
+	}
+
+	public function getAllStudent()
+	{
+		//Renvoie en JSON la liste des élèves, avec leurs photos, nom, prénom, login
+		$json; $i=0;
+		$eleveC = new eleveC();
+		$utilsC = new utilsC();
+		$classeC = new classeC();
+		$eleves = $eleveC->getElevesByIdProf($_SESSION['id']);
+		while($i<sizeof($eleves))
+		{
+			$json[$i]['nom'] = $eleves[$i]['nomEleve'];
+			$json[$i]['prenom'] = $eleves[$i]['prenomEleve'];
+			$json[$i]['login'] = $eleves[$i]['loginEleve'];
+			$json[$i]['dateNaissance'] = $eleves[$i]['birthdayEleve'];
+			$classe = $classeC->getClasseById($eleves[$i]['idClasseEleve']);
+			$json[$i]['classe'] = $classe['lib'];
+			$photo = base_url()."application/assets/eleves/".$eleves[$i]['loginEleve'].".png";
+			$json[$i]['photo'] = $utilsC->ImageToBase64($photo);
+			$i++;
+		}
+
+		$res = json_encode($json);
+
+		//var_dump($res);
+
+		return $res;
+	}
+
+	
+
+	public function agenda(){
+		if($this->verifProfilProf())
+		{
+			$this->load->view('agenda');
+		}
+		else
+		{
+			$this->redirect();
+		}
 	}
 
 	public function addStudent(){

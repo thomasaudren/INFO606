@@ -1,11 +1,8 @@
 <?php
 
-
-<?php
-
 include "connexion.php";
 
-class niveauM
+class agendaM
 {
 	
 	public function __construct()

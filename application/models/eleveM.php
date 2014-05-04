@@ -9,7 +9,7 @@ class eleveM
 	{
 	}
 
-	public function recupElevesByProf($id)
+	public function getElevesByIdProf($id)
 	{
 		$ret; $i=0;
 		$stmt = myPDO::donneInstance()->prepare(<<<SQL
