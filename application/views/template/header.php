@@ -14,7 +14,7 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 
 	  	<div style='text-align:right;margin-top:.5%;margin-left:5%' id='header'>
-			<div style='color:white;margin-top:1%' id="identifiant" >
+			<div style='color:white;margin-top:0.8%;margin-left:-4%' id="identifiant" >
 				<?php echo "Bonjour ".$_SESSION['prenom']." ".$_SESSION['nom']; ?>
 			</div>
 			<!--<div class="notifications">
@@ -22,9 +22,11 @@
 				<div id="notif">
 			</div>
 			</div>-->
-			<a href=<?php echo base_url().'welcome/logout' ?>>
-				<img height='50px' src=<?php echo base_url().'application/assets/img/icons/Deco.png' ?> />
-			</a>
+			<div style='margin-top:-0.45%;margin-right:1%'>
+				<a href=<?php echo base_url().'welcome/logout' ?>>
+					<img height='50px' src=<?php echo base_url().'application/assets/img/icons/Deco.png' ?> />
+				</a>
+			</div>
 		</div>
 
 	</nav>

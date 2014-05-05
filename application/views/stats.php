@@ -3,8 +3,8 @@
 $eleveC = new eleveC(); 
 $classeC = new classeC(); 
 $professeurC = new professeurC();
-$data['title'] = 'Statistiques';
-$this->load->view('template/header', $data); ?>
+
+?>
 
 <div id="head">
 <h1 class="page-header" style='text-align:center'>Vos élèves</h1>
